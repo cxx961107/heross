@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <script src="/node_modules/art-template/lib/template-web.js"></script>
+    <script src="/node_modules/axios/dist/axios.js"></script>
+
+
+  <script id="tmpl" type="text/template">
+    {{ each message }}
+    <tr>
+      <td>{{ $value.id }}</td>  
+      <td>{{ $value.username }}</td>
+      <td>{{ $value.gender }}</td>
+      <td>{{ $value.ctime }}</td>
+      <td>
+        <a href="#" class="btn btn-xs btn-info">查看</a>
+        <a href="#" class="btn btn-xs btn-warning">编辑</a>
+        <a href="#" class="btn btn-xs btn-danger del">删除</a>
+      </td>
+    </tr>
+    {{ /each }}
+  </script>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1>乐淘首页</h1>
+
+        <!-- jquery  $  bootstrap -->
+        <h1> 王者农药 <small>英雄管理器</small> </h1>
+        <div>
+            <a href="#" class="btn btn-success pull-right">添加英雄</a>
+        </div>
+        <table class="table table-bordered"> 
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>性别</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+      
+      $(function(){
+        
+        function getData(urlStr){
+            let p=new Promise(function(resolve,reject){
+                $.ajax({
+                    url:urlStr,
+                    type:'get',
+                    success:function(data){
+                        // console.log(data)
+                        resolve(data)
+                            // let html=template('tmpl',data)
+                            // $('tbody').html( html)
+                    },
+                    error:function(err){
+                        reject(err)
+                    }
+                })
+            })
+
+            return p;
+        }
+
+        getData('http://localhost:5000/api/getheros')
+        .then(function(data){
+            console.log(data);
+            return getData('http://localhost:5000/api/getinfo?id=1')
+        })
+        .then(function(data2){
+            console.log(data2)
+        })
+
+
+      })
+    
+    </script>
+    
+</body>
+</html>
