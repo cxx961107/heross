@@ -57,90 +57,28 @@
     <script>
       
       $(function(){
-        //平时ajax正常发送 但是现在大家学会 new promise
         
-        
-        function myAxios(urlStr){
-            let p=new Promise(function(resolve,reject){
-                $.ajax({
-                    url:urlStr,
-                    type:'get',
-                    success:function(data){
-                        console.log('我是ajax请求成功的')
-                        resolve(data)
-                    },
-                    error:function(err){
-                        reject(err)
-                    }
-                })
-            })
-            return p;
-        }
+        // $.ajax({
+        //     url:'http://localhost:5000/api/getheros',
+        //     type:'get',
+        //     success:function(data){
+        //         // console.log(data)
+        //         let html=template('tmpl',data)
+        //         $('tbody').html( html)
+        //     }
+        // })
 
-       /*  function test() {
-            console.log(1)
-            myAxios('http://localhost:5000/api/getheros')
-            console.log(2)
-        }
-        test(); */
-        //我就非的先打印那个我是ajax 在执行2这行
-        async function test() {
-            console.log(1)
-            await  myAxios('http://localhost:5000/api/getheros')
-            await  myAxios('http://localhost:5000/api/getheros')
-            console.log(2)
-        }
-        test();
-
-
-
-
-
-           
-              //async说这个函数里面有 异步操作
-           /*  async function test(params) {
-                    await xxx;// 等一等 等我完成后在继续下去
-                    console.log(2222222)
+        axios('http://localhost:5000/api/getheros').then((results)=>{
+            // console.log(results)
+            if(results.status==200&&results.data.err_code==0){
+                let html=template('tmpl',results.data)
+                $('tbody').html( html)
             }
-
-            test() */
-
-        //    myAxios(url).then().then().then().then()
-
-
-
-
-        // axios(url).then(function(){})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /*  let p=new Promise(function(resolve,reject){
-            setTimeout(() => {
-                resolve(1);
-             }, 1000);
         })
 
-        p.then(function(res){
-            console.log(1);
-        })
- */
-    
+        // axios(url,参数).then(成功回调)
+        // axios.get(url,参数).then(成功回调)
+        // axios.post(url,参数).then(成功回调)
 
 
       })

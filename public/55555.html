@@ -66,7 +66,6 @@
                     url:urlStr,
                     type:'get',
                     success:function(data){
-                        console.log('我是ajax请求成功的')
                         resolve(data)
                     },
                     error:function(err){
@@ -77,33 +76,21 @@
             return p;
         }
 
-       /*  function test() {
-            console.log(1)
-            myAxios('http://localhost:5000/api/getheros')
-            console.log(2)
-        }
-        test(); */
-        //我就非的先打印那个我是ajax 在执行2这行
-        async function test() {
-            console.log(1)
-            await  myAxios('http://localhost:5000/api/getheros')
-            await  myAxios('http://localhost:5000/api/getheros')
-            console.log(2)
-        }
-        test();
-
-
-
-
-
+        myAxios('http://localhost:5000/api/getheros')
+            .then(function(res){
+                    console.log('所有英雄',res)
+                // 发送ajax获取id的那个英雄
+                return myAxios('http://localhost:5000/api/getinfo?id=1')
+            })
+            .then(function(res){
+                console.log('id为1的英雄',res)
+                return myAxios('http://localhost:5000/api/getinfo?id=2')
+            })
+            .then((res)=>{
+                console.log('id为2的英雄',res)
+            })
            
-              //async说这个函数里面有 异步操作
-           /*  async function test(params) {
-                    await xxx;// 等一等 等我完成后在继续下去
-                    console.log(2222222)
-            }
 
-            test() */
 
         //    myAxios(url).then().then().then().then()
 
